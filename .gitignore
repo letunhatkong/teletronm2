@@ -11,7 +11,7 @@ atlassian*
 /app/code/Magento/TestModule*
 /node_modules
 /.grunt
-
+/sss
 /pub/errors
 /pub/opt
 /pub/static
