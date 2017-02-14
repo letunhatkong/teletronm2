@@ -12,6 +12,7 @@
         <move element="top.search" destination="header-wrapper" before="minicart"/>
         <move element="catalog.topnav" destination="header-wrapper" after="-"/>
         <move element="top.right.info" destination="header.panel" before="-"/> -->
+        
         <referenceBlock name="header.panel">
             <block class="Magento\Theme\Block\Html\Header\Logo" name="logo">
                     <arguments>
