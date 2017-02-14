@@ -1,0 +1,250 @@
+<?php
+$_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$storeManager = $_objectManager->get('Magento\Store\Model\StoreManagerInterface');
+$currentStore = $storeManager->getStore();
+$baseUrl = $currentStore->getBaseUrl();
+$mediaUrl = $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+$linkUrl = $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK);
+
+$sa = $_objectManager->get('Sahy\Banner\Block\Frontend\Banners');
+$_sub1 = $sa->getAllBannerByType($sa::TYPE_SUB_BANNER1);
+$_sub2 = $sa->getAllBannerByType($sa::TYPE_SUB_BANNER2);
+?>
+<div class="row">
+<?php if (isset($_sub1) && count($_sub1) > 0) { ?>
+    <?php $size = count($_sub1); ?>
+    <div class="clearfix"></div>
+    <div id="bannerHS" class="carousel slide" data-ride="carousel">
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <?php $i =1; ?>
+            <?php foreach($_sub1 as $bn) { ?>
+                <div class="item <?= ($i == 1) ? 'active':'' ?>">
+                    <img src="<?= $mediaUrl . $bn['image']?>" />
+                    <div class="innerHS">
+                        <p class="titHS"><?= ($bn['name'] == '.') ? "" :  $bn['name'] ?></p>
+                        <p class="sumHS"><?= $bn['details'] ?></p>
+                        <?php if ($bn['link'] != '') { ?>
+                            <a href="<?=$bn['link']?>" class="clickHereHS">CLICK HERE</a>
+                        <?php } ?>
+                    </div>
+                </div>
+                <?php $i++; ?>
+            <?php } ?>
+        </div>
+        <!-- Controls -->
+        <a href="#bannerHS" role="button" data-slide="prev">
+            <div class="prevButtonWrap btHomeSlider" aria-hidden="true"><span></span></div>
+        </a>
+        <a href="#bannerHS" role="button" data-slide="next">
+            <div class="nextButtonWrap btHomeSlider" aria-hidden="true"><span></span></div>
+        </a>
+
+        <!-- Indicators -->
+        <ol class="carousel-indicators hidden">
+            <?php $i =0 ?>
+            <?php foreach($_sub1 as $bn) { ?>
+                <li data-target="#bannerHS" data-slide-to="<?= $i ?>" class="<?= ($i == 0) ? 'active':'' ?>"></li>
+                <?php $i++; ?>
+            <?php } ?>
+        </ol>
+    </div>
+    <div class="clearfix pad40"></div>
+<?php } ?>
+<div id="sologan">
+    <i class="text-first">CALL US AT OUT TOLL FREE NUMBER <span>1.855.988.6999</span></i><br>
+    <i>Some <strong>FURNITURE </strong> products are not available online. Visit a <strong>TELETRON </strong> store or <strong>CALL US </strong>for prices and store inventory.</i>
+    <hr style="width: 15%;border-top: 4px solid #f3f3f3;">
+</div>
+<div id="pr-product">
+    <p class="text-first">FREE White Glove Delivery* on <strong>Inada Massage Chairs!</strong></p>
+    <p>*This amazing offer applies to any purchase of Inada DreamWave® or Flex3s® massage chair from <strong>TELETRON</strong>.</p>
+    <div class="row" id="section-pr">
+        <div class="col-md-4">
+            <img src="<?= $mediaUrl."images/section-home/char.png"; ?>" alt="">
+            <h4>MASSAGE CHAIRS</h4>
+            <p class="read-more"><a href="" title="">Read More</a></p>
+        </div>
+        <div class="col-md-4">
+            <img src="<?= $mediaUrl."images/section-home/char2.png"; ?>" alt="">
+            <h4>ELECTRONICS APPLIANCES</h4>
+            <p class="read-more"><a href="" title="">Read More</a></p>
+        </div>
+        <div class="col-md-4">
+            <img src="<?= $mediaUrl."images/section-home/char3.png"; ?>" alt="">
+            <h4>FURNITURE</h4>
+            <p class="read-more"><a href="" title="">Read More</a></p>
+        </div>
+    </div>
+</div>
+<div id="new-product">
+    <p class="text-first">NEW PRODUCTS</p>
+    <div class="row" id="section-new">
+<?php 
+    $productCollection = $_objectManager->create('Magento\Catalog\Model\ResourceModel\Product\CollectionFactory');
+    $collection = $productCollection->create()
+        ->addAttributeToSelect('*')
+        ->addFieldToFilter("status", "1")
+        ->addFieldToFilter("type_id", array('neq' => 'configurable'))
+        ->setOrder('created_at', 'DESC')
+        ->setPageSize(8) // Limit product
+        ->load();
+    foreach ($collection as $product){ ?>
+    
+        <div class="col-md-3">
+            <a href="<?= $product->getProductUrl()?>"><img src="<?= $mediaUrl ."catalog/product". $product['image'] ?>" alt="<?= $product->getName()?>"></a>
+            <h4><a href="<?= $product->getProductUrl()?>"><?= $product->getName()?></a></h4>
+            <?php $specialPrice = $product->getSpecialPrice(); 
+                if(!is_null($specialPrice)){?>
+                    <span class="price-single"><a href="<?= $product->getProductUrl()?>"><?=  "$".number_format($product->getPrice(), 2); ?></a></span>
+                    <span class="special_price"><a href="<?= $product->getProductUrl()?>"><?= "$".number_format($product->getSpecialPrice(), 2);?></a></span>
+                <?php }
+                else{ ?>
+                    <span class="single-price"><a href="<?= $product->getProductUrl()?>"><?=  "$".number_format($product->getPrice(), 2); ?></a></span>
+            <?php } ?>
+        </div>   
+
+    <?php } ?>
+   </div> 
+</div>
+<div id="special-product">
+    <div class="top-best">
+        <div class="div-box">
+            <span class="text-top change-color">TOP</span>
+        </div>
+        <div class="div-box">
+            <span class="text-best">BEST</span>
+        </div>
+    </div>
+    <?php
+    $categoryFactory = $_objectManager->create('Magento\Catalog\Model\ResourceModel\Category\CollectionFactory');
+    $topCategory = $categoryFactory->create()
+    ->addAttributeToFilter('url_key','top-products')
+    ->addAttributeToSelect('*')
+    ->getFirstItem();
+    $topCollection = $_objectManager->create('Magento\Catalog\Model\ResourceModel\Product\CollectionFactory');
+    $topCate = $topCollection->create()
+    ->addAttributeToSelect('*')
+    ->addCategoryFilter($topCategory)
+    ->addFieldToFilter("type_id", array('neq' => 'configurable'))
+    ->addAttributeToFilter('status', '1')
+    ->setPageSize(4)
+    ->setOrder('created_at', 'DESC')->load();
+    ?>
+    <?php
+    $bestCategory = $categoryFactory->create()
+        ->addAttributeToFilter('url_key','best-products')
+        ->addAttributeToSelect('*')
+        ->getFirstItem();
+    $bestCollection = $_objectManager->create('Magento\Catalog\Model\ResourceModel\Product\CollectionFactory');
+    $bestCate = $bestCollection->create()
+        ->addAttributeToSelect('*')
+        ->addCategoryFilter($bestCategory)
+        ->addFieldToFilter("type_id", array('neq' => 'configurable'))
+        ->addAttributeToFilter('status', '1')
+        ->setPageSize(4)
+        ->setOrder('created_at', 'DESC')->load();
+    ?>
+    <div class="row section-top open">
+       <?php  foreach ($topCate as $product){ ?>
+        <div class="col-md-3">
+            <a href="<?= $product->getProductUrl()?>"><img src="<?= $mediaUrl ."catalog/product". $product['image'] ?>" alt="<?= $product->getName()?>"></a>
+            <h4><a href="<?= $product->getProductUrl()?>"><?= $product->getName()?></a></h4>
+            <?php $specialPrice = $product->getSpecialPrice(); 
+                if(!is_null($specialPrice)){?>
+                    <span class="price-single"><a href="<?= $product->getProductUrl()?>"><?=  "$".number_format($product->getPrice(), 2); ?></a></span>
+                    <span class="special_price"><a href="<?= $product->getProductUrl()?>"><?= "$".number_format($product->getSpecialPrice(), 2);?></a></span>
+                <?php }
+                else{ ?>
+                    <span class="single-price"><a href="<?= $product->getProductUrl()?>"><?=  "$".number_format($product->getPrice(), 2); ?></a></span>
+            <?php } ?>
+        </div>
+       <?php } ?>
+    </div>
+    <div class="row section-best">
+        <?php  foreach ($bestCate as $product){ ?>
+            <div class="col-md-3">
+                <a href="<?= $product->getProductUrl()?>"><img src="<?= $mediaUrl ."catalog/product". $product['image'] ?>" alt="<?= $product->getName()?>"></a>
+                <h4><a href="<?= $product->getProductUrl()?>"><?= $product->getName()?></a></h4>
+                <?php $specialPrice = $product->getSpecialPrice(); 
+                if(!is_null($specialPrice)){?>
+                    <span class="price-single"><a href="<?= $product->getProductUrl()?>"><?=  "$".number_format($product->getPrice(), 2); ?></a></span>
+                    <span class="special_price"><a href="<?= $product->getProductUrl()?>"><?= "$".number_format($product->getSpecialPrice(), 2);?></a></span>
+                <?php }
+                else{ ?>
+                    <span class="single-price"><a href="<?= $product->getProductUrl()?>"><?=  "$".number_format($product->getPrice(), 2); ?></a></span>
+            <?php } ?>
+            </div>
+        <?php } ?>
+    </div> 
+</div>
+<div id="section-sale">
+    <p class="text-first">SALE</strong></p>
+</div>
+<?php if (isset($_sub2) && count($_sub2) > 0) { ?>
+    <?php $size = count($_sub2); ?>
+    <div class="clearfix"></div>
+    <div id="bannerHS" class="carousel slide" data-ride="carousel" data-interval="false">
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <?php $i =1; ?>
+            <?php foreach($_sub2 as $bn) { ?>
+                <div class="item <?= ($i == 1) ? 'active':'' ?>">
+                    <img src="<?= $mediaUrl . $bn['image']?>" />
+                </div>
+                <?php $i++; ?>
+            <?php } ?>
+        </div>
+        <!-- Controls -->
+        <a href="#bannerHS" role="button" data-slide="prev">
+            <div class="prevButtonWrap btHomeSlider" aria-hidden="true"><span></span></div>
+        </a>
+        <a href="#bannerHS" role="button" data-slide="next">
+            <div class="nextButtonWrap btHomeSlider" aria-hidden="true"><span></span></div>
+        </a>
+        <!-- Indicators -->
+        <ol class="carousel-indicators hidden">
+            <?php $i =0 ?>
+            <?php foreach($_sub2 as $bn) { ?>
+                <li data-target="#bannerHS" data-slide-to="<?= $i ?>" class="<?= ($i == 0) ? 'active':'' ?>"></li>
+                <?php $i++; ?>
+            <?php } ?>
+        </ol>
+    </div>
+    <div class="clearfix pad40"></div>
+<?php } ?>
+<div id="pr-product">
+    <p class="text-first">NEW & PROMOTIONS</strong></p>
+    <div class="col-md-4">
+        <img src="<?= $mediaUrl."images/box.png"; ?>" alt="">
+    </div>
+    <div class="col-md-4">
+        <img src="<?= $mediaUrl."images/box.png"; ?>" alt="">
+    </div>
+    <div class="col-md-4">
+        <img src="<?= $mediaUrl."images/box.png"; ?>" alt="">
+    </div>
+</div>
+
+</div>
+
+<script type="text/javascript">
+    require([ 'jquery', 'jquery/ui'], function($){ 
+        $(document).ready(function($) {
+            $('#special-product .text-top').click(function () {
+                $('.section-best').removeClass('open');
+                $('.section-top').addClass("open");
+                $('.text-top').addClass("change-color");
+                $('.text-best').removeClass('change-color');
+            });
+            $('#special-product .text-best').click(function () {
+                $('.section-top').removeClass('open');
+                $('.section-best').addClass("open");
+                $('.text-best').addClass('change-color');
+                $('.text-top').removeClass('change-color');
+            });
+        }); 
+    });
+</script>
+
+        
