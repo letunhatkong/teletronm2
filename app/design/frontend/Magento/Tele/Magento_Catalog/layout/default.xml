@@ -9,6 +9,8 @@
     <body>
 
         <referenceBlock name="breadcrumbs" remove="true" />
-
+        <referenceBlock name="catalog.compare.link" remove="true" />
+        <referenceBlock name="catalog.compare.sidebar" remove="true" />
+        <!-- <referenceBlock name="catalog.wishlist.link" remove="true" /> -->
     </body>
 </page>
