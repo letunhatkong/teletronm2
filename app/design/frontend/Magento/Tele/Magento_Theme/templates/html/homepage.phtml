@@ -148,7 +148,11 @@ $_sub2 = $sa->getAllBannerByType($sa::TYPE_SUB_BANNER2);
     <div class="row section-top open">
        <?php  foreach ($topCate as $product){ ?>
         <div class="col-md-3">
-            <a href="<?= $product->getProductUrl()?>"><img src="<?= $mediaUrl ."catalog/product". $product['image'] ?>" alt="<?= $product->getName()?>"></a>
+        <div class="box-img">
+            <a href="<?= $product->getProductUrl()?>">
+                <img src="<?= $mediaUrl ."catalog/product". $product['image'] ?>" alt="<?= $product->getName()?>">
+            </a>
+        </div>
             <h4><a href="<?= $product->getProductUrl()?>"><?= $product->getName()?></a></h4>
             <?php $specialPrice = $product->getSpecialPrice(); 
                 if(!is_null($specialPrice)){?>
