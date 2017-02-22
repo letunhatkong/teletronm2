@@ -7,18 +7,6 @@
 // @codingStandardsIgnoreFile
 
 ?>
-<?php 
-
-?>
-
-
-<?php if ($_attributeValue): ?>
-<div class="product attibute <?php echo $_className?>">
-<?php if ($_attributeLabel != 'none'): ?><strong class="type"><?php echo $_attributeLabel?></strong><?php endif; ?>
-<div class="value" <?php echo $_attributeAddAttribute;?>><?php echo $_attributeValue; ?></div>
-</div>
-<?php endif; ?>
-
 <?php if ($detailedInfoGroup = $block->getGroupChildNames('detailed_info', 'getChildHtml')):?>
     <div class="product info detailed">
         <?php $layout = $block->getLayout(); ?>
@@ -32,7 +20,7 @@
                     $alias = $layout->getElementAlias($name);
                     $label = $block->getChildData($alias, 'title');
                 ?>
-                <div class="data item title"
+                <div class="data item title <?php echo $label; ?>"
                      aria-labeledby="tab-label-<?php /* @escapeNotVerified */ echo $alias;?>-title"
                      data-role="collapsible" id="tab-label-<?php /* @escapeNotVerified */ echo $alias;?>">
                     <a class="data switch"
@@ -40,13 +28,23 @@
                        data-toggle="switch"
                        href="#<?php /* @escapeNotVerified */ echo $alias; ?>"
                        id="tab-label-<?php /* @escapeNotVerified */ echo $alias;?>-title">
-                        <?php /* @escapeNotVerified */ echo $label; ?>
+                        <?php 
+                        if ($label == "Details") {
+                        echo "More Information";
+                    }else if($label == "More Information"){
+                        echo "Additional Information";
+                    }
+                    else{
+                        echo $label;
+                    }
+                        ?>
+                    
                     </a>
                 </div>
                 <div class="data item content" id="<?php /* @escapeNotVerified */ echo $alias; ?>" data-role="content">
                     <?php /* @escapeNotVerified */ echo $html; ?>
                 </div>
             <?php endforeach;?>
-        </div>
+    </div>
     </div>
 <?php endif; ?>

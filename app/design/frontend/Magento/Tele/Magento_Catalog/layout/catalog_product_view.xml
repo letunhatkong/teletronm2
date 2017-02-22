@@ -11,8 +11,8 @@
         <referenceContainer name="product.info.media" htmlTag="div" htmlClass="product media mediaDP" />
 
 
-        <move element="page.main.title" destination="product.info.main" before="-"/>
-        <move element="product.info.media" destination="content" before="-" />
+        <!-- <move element="page.main.title" destination="product.info.main" before="-"/> -->
+        <!-- <move element="product.info.media" destination="content" before="-" /> -->
 
 
     </body>

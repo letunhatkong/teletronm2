@@ -8,6 +8,12 @@
 
 /* @var $block \Magento\Wishlist\Block\Link */
 ?>
+<?php
+    $_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $storeManager = $_objectManager->get('Magento\Store\Model\StoreManagerInterface'); 
+    $currentStore = $storeManager->getStore();
+    $baseUrl = $currentStore->getBaseUrl();
+?>
 <li class="lane-top">|</li>
 <li class="link wishlist" data-bind="scope: 'wishlist'">
     <a <?php /* @escapeNotVerified */ echo $block->getLinkAttributes() ?>>My Wishlist
@@ -17,13 +23,13 @@
     </a>
 </li>
 <li class="lane-top">|</li>
-<li class="lane-top">Manufacturers</li>
+<li class="lane-top"><a href="<?= $baseUrl ?>brand" title="">Manufacturers</a></li>
 <li class="lane-top">|</li>
-<li class="lane-top">Checkout</li>
+<li class="lane-top"><a href="#" title="">Checkout</a></li>
 <li class="lane-top">|</li>
-<li class="lane-top">Teletron Ads</li>
+<li class="lane-top"><a href="#" title="">Teletron Ads</a></li>
 <li class="lane-top">|</li>
-<li class="lane-top">Store Locator</li>
+<li class="lane-top"><a href="#" title="">Store Locator</a></li>
 <li class="lane-top">|</li>
 <script type="text/x-magento-init">
     {

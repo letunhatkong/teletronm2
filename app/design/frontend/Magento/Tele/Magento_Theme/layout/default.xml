@@ -8,11 +8,6 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
     	<!-- Header -->
-<!--         <referenceBlock name="advanced-search-link" remove="true"/>
-        <move element="top.search" destination="header-wrapper" before="minicart"/>
-        <move element="catalog.topnav" destination="header-wrapper" after="-"/>
-        <move element="top.right.info" destination="header.panel" before="-"/> -->
-        
         <referenceBlock name="header.panel">
             <block class="Magento\Theme\Block\Html\Header\Logo" name="logo">
                     <arguments>
@@ -21,14 +16,21 @@
                     </arguments>
                 </block>
         </referenceBlock>
-        <move element="catalog.topnav" destination="header-wrapper" after="-"/>
+
+        <referenceBlock name="header-wrapper">
+            <container name="menu.search.container" htmlTag="div" htmlId="menu-search-container" />
+        </referenceBlock>
+
+        <move element="catalog.topnav" destination="menu.search.container" before="-"/>
+        <move element="top.search" destination="menu.search.container" after="-"/>
         <referenceBlock name="advanced-search-link" remove="true"/>
         <move element="minicart" destination="header.panel"/>
+
 
         <!-- Message -->
         <referenceContainer name="page.messages" htmlTag="div" htmlClass="page messages container" />
         <!-- home -->
-        <block class="Magento\Framework\View\Element\Template" name="home.banner" template="Magento_Theme::html/homebanner.phtml"/>
+        <!-- <block class="Magento\Framework\View\Element\Template" name="home.banner" template="Magento_Theme::html/homebanner.phtml"/> -->
         <block class="Magento\Framework\View\Element\Template" name="home.page" template="Magento_Theme::html/homepage.phtml"/>
         
         <move element="home.banner" destination="columns.top" />
