@@ -22,8 +22,8 @@ $_sub2 = $sa->getAllBannerByType($sa::TYPE_SUB_BANNER2);
                 <div class="item <?= ($i == 1) ? 'active':'' ?>">
                     <img src="<?= $mediaUrl . $bn['image']?>" />
                     <div class="innerHS">
-                        <p class="titHS"><?= ($bn['name'] == '.') ? "" :  $bn['name'] ?></p>
-                        <p class="sumHS"><?= $bn['details'] ?></p>
+                        
+                       
                         <?php if ($bn['link'] != '') { ?>
                             <a href="<?=$bn['link']?>" class="clickHereHS">CLICK HERE</a>
                         <?php } ?>
@@ -91,7 +91,7 @@ $_sub2 = $sa->getAllBannerByType($sa::TYPE_SUB_BANNER2);
         ->load();
     foreach ($collection as $product){ ?>
     
-        <div class="col-md-3">
+        <div class="col-md-3 custom-resize">
             <a href="<?= $product->getProductUrl()?>"><img src="<?= $mediaUrl ."catalog/product". $product['image'] ?>" alt="<?= $product->getName()?>"></a>
             <h4><a href="<?= $product->getProductUrl()?>"><?= $product->getName()?></a></h4>
             <?php $specialPrice = $product->getSpecialPrice(); 
@@ -147,7 +147,7 @@ $_sub2 = $sa->getAllBannerByType($sa::TYPE_SUB_BANNER2);
     ?>
     <div class="row section-top open">
        <?php  foreach ($topCate as $product){ ?>
-        <div class="col-md-3">
+        <div class="col-md-3 custom-resize">
         <div class="box-img">
             <a href="<?= $product->getProductUrl()?>">
                 <img src="<?= $mediaUrl ."catalog/product". $product['image'] ?>" alt="<?= $product->getName()?>">
@@ -167,7 +167,7 @@ $_sub2 = $sa->getAllBannerByType($sa::TYPE_SUB_BANNER2);
     </div>
     <div class="row section-best">
         <?php  foreach ($bestCate as $product){ ?>
-            <div class="col-md-3">
+            <div class="col-md-3 custom-resize">
                 <a href="<?= $product->getProductUrl()?>"><img src="<?= $mediaUrl ."catalog/product". $product['image'] ?>" alt="<?= $product->getName()?>"></a>
                 <h4><a href="<?= $product->getProductUrl()?>"><?= $product->getName()?></a></h4>
                 <?php $specialPrice = $product->getSpecialPrice(); 
@@ -217,16 +217,43 @@ $_sub2 = $sa->getAllBannerByType($sa::TYPE_SUB_BANNER2);
     </div>
     <div class="clearfix pad40"></div>
 <?php } ?>
-<div id="pr-product">
+<div id="promotion-product">
     <p class="text-first">NEW & PROMOTIONS</strong></p>
-    <div class="col-md-4">
-        <img src="<?= $mediaUrl."images/box.png"; ?>" alt="">
+    <div class="row">
+        
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 style-padding">
+        <div class="demo-3" id ="box-one"> 
+            <a href="<?= $baseUrl.'blog/category/korean'?>" title="">
+            <div class="box-1">
+                <img src="<?= $mediaUrl."images/box.png"; ?>" style="width:100%">
+                <div class="details">
+                    <h3>KOREAN</h3>   
+                </div>
+             </div>
+            </a>
+        </div>
     </div>
-    <div class="col-md-4">
-        <img src="<?= $mediaUrl."images/box.png"; ?>" alt="">
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 style-padding">
+        <div class="demo-3" id ="box-two"> 
+            <a href="<?= $baseUrl.'blog/category/chinese'?>" title="">
+                <img src="http://www.teletronusa.com/media/wysiwyg/PromotionAds/021517_Teletron_News_and_Promotions_Background_Chinese.jpg" style="width:100%">
+                <div class="details">
+                    <h3>CHINESE</h3>   
+                </div>
+            </a>
+        </div>
     </div>
-    <div class="col-md-4">
-        <img src="<?= $mediaUrl."images/box.png"; ?>" alt="">
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 style-padding">
+        <div class="demo-3" id ="box-three"> 
+            <a href="<?= $baseUrl.'blog/category/vietnamese'?>" title="">
+                <img src="http://www.teletronusa.com/media/wysiwyg/Atlanta.PNG" style="width:100%">
+                <div class="details">
+                    <h3>VIETNAMESE</h3>   
+                </div>
+            </a>
+        </div>
+    </div>
     </div>
 </div>
 
@@ -246,6 +273,35 @@ $_sub2 = $sa->getAllBannerByType($sa::TYPE_SUB_BANNER2);
                 $('.section-best').addClass("open");
                 $('.text-best').addClass('change-color');
                 $('.text-top').removeClass('change-color');
+            });
+            // jquery ads
+            jQuery("#box-one").mouseover(function(){
+                jQuery("#box-one .details").css("height", "100%");
+                jQuery("#box-one .details h3").css("padding-top", "20%");
+            });
+             jQuery("#box-one").mouseout(function(){
+                jQuery("#box-one .details").css("height", "30%");
+                jQuery("#box-one .details h3").css("padding-top", "0%");
+            });
+
+
+             jQuery("#box-two").mouseover(function(){
+                jQuery("#box-two .details").css("height", "100%");
+                jQuery("#box-two .details h3").css("padding-top", "20%");
+            });
+             jQuery("#box-two").mouseout(function(){
+                jQuery("#box-two .details").css("height", "30%");
+                jQuery("#box-two .details h3").css("padding-top", "0%");
+            });
+
+
+             jQuery("#box-three").mouseover(function(){
+                jQuery("#box-three .details").css("height", "100%");
+                jQuery("#box-three .details h3").css("padding-top", "20%");
+            });
+             jQuery("#box-three").mouseout(function(){
+                jQuery("#box-three .details").css("height", "30%");
+                jQuery("#box-three .details h3").css("padding-top", "0%");
             });
         }); 
     });
